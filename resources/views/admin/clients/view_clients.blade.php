@@ -3,8 +3,8 @@
 
   <div id="content">
     <div id="content-header">
-       <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">View Product</a> </div>
-      <h1>Products</h1>
+       <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Clients</a> <a href="#" class="current">View Client</a> </div>
+      <h1>Clients</h1>
          @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -25,7 +25,7 @@
         <div class="span12">
           <div class="widget-box">
             <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-              <h5>View Products</h5>
+              <h5>View Clients</h5>
             </div>
             <div class="widget-content nopadding">
               <table class="table table-bordered data-table">
@@ -35,6 +35,7 @@
                   <th>Client Name</th>
                   <th>Client Address</th>
                   <th>Client Membership</th>
+                  <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,18 +44,18 @@
                   <td>{{ $client -> id }}</td>
                   <td>{{ $client -> name }}</td>
                   <td>{{ $client -> address }}</td>
-                  <td>{{ $client -> membership_id }}</td>
+                  <td>{{ $client -> membership['name'] }}</td>
                   <td class="center">
-                    <a href="#myModal{{ $product -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
+                    <a href="#myModal{{ $client -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
                     <a href="{{ url('/admin/add-client/') }}" class="btn btn-success btn-mini">Add</a>
                     <a href="{{ url('/admin/edit-client/'.$client -> id) }}" class="btn btn-primary btn-mini">Edit</a>
-                    <a id="delProduct" href="{{ url('/admin/delete-client/'.$client -> id) }}" class="btn btn-danger btn-mini">Delete</a>
-                    <!-- <a rel="{{ $product->id }}" rel1="delete-product" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
+                    <a id="delClient" href="{{ url('/admin/delete-client/'.$client -> id) }}" class="btn btn-danger btn-mini">Delete</a>
+                    <!-- <a rel="{{ $client->id }}" rel1="delete-client" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
                   </td>
                 </tr>
 
 
-                  <div id="myModal{{ $product -> id }}" class="modal hide">
+                  <div id="myModal{{ $client -> id }}" class="modal hide">
                     <div class="modal-header">
                       <button data-dismiss="modal" class="close" type="button">×</button>
                       <h3>Full Details for: {{ $client -> name }}</h3>

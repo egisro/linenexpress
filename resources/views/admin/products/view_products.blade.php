@@ -32,8 +32,7 @@
                 <thead>
                 <tr>
                   <th>Product ID</th>
-                  <th>Category ID</th>
-                  <th>Category Name</th>
+                  <th>Category</th>
                   <th>Product Name</th>
                   <th>Product Code</th>
                   <th>Price</th>
@@ -45,7 +44,6 @@
                 @foreach($products as $product)
                 <tr class="gradeX">
                   <td>{{ $product -> id }}</td>
-                  <td>{{ $product -> category_id }}</td>
                   <td>{{ $product -> category_name }}</td>
                   <td>{{ $product -> product_name }}</td>
                   <td>{{ $product -> product_code }}</td>
@@ -56,22 +54,22 @@
                     @endif
                   </td>
                   <td class="center">
-                    <a href="#myModal{{ $product -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a> 
-                    <a href="{{ url('/admin/add-product/') }}" class="btn btn-success btn-mini">Add</a> 
-                    <a href="{{ url('/admin/edit-product/'.$product -> id) }}" class="btn btn-primary btn-mini">Edit</a> 
+                    <a href="#myModal{{ $product -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
+                    <a href="{{ url('/admin/add-product/') }}" class="btn btn-success btn-mini">Add</a>
+                    <a href="{{ url('/admin/edit-product/'.$product -> id) }}" class="btn btn-primary btn-mini">Edit</a>
                     <a id="delProduct" href="{{ url('/admin/delete-product/'.$product -> id) }}" class="btn btn-danger btn-mini">Delete</a>
                     <!-- <a rel="{{ $product->id }}" rel1="delete-product" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
                   </td>
                 </tr>
 
-                
+
                   <div id="myModal{{ $product -> id }}" class="modal hide">
                     <div class="modal-header">
                       <button data-dismiss="modal" class="close" type="button">×</button>
                       <h3>Full Details for: {{ $product -> product_name }}</h3>
                     </div>
                     <div class="modal-body">
-                      
+
                       <p>Name: {{ $product -> product_name }}</p>
                       <p>ID: {{ $product -> id }}</p>
                       <p>Code: {{ $product -> product_code }}</p>
@@ -80,7 +78,7 @@
                       <p>Description: {{ $product -> description }}</p>
                     </div>
                   </div>
-               
+
 
                 @endforeach
               </tbody>
@@ -92,6 +90,6 @@
     </div>
   </div>
 
- 
+
 
 @endsection
