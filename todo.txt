@@ -1,0 +1,12 @@
+padaryti pakeitimai:
+
+1. migracija "2018_11_30_091359_create_categories_table" pataisyti nebūtini laukai (nullable)
+2. išjungtas js/backend_js/jquery.validate, yra html5 validacija
+3. sukurtas kategorijų sideris
+4. "pridėti produktą" skiltyje pataisytos produkto kategorijos
+5. (nebaigta) admino šoniniame meniu suskaičiuotos kategorijos ir produktai
+6. sukurti client, membership, price moduliai
+7. sukurta client, membership, price migrcijos
+8. sukurtas membership seederis
+9. pridėtas klientų viewsai ir routai
+10.

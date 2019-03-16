@@ -4,38 +4,43 @@
     <div id="content">
         <div id="content-header">
             <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Categories</a> <a href="#" class="current">Add Category</a> </div>
-            <h1>Categories</h1>
+            <h1>Clients</h1>
         </div>
         <div class="container-fluid"><hr>
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">
                         <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-                            <h5>Add Category</h5>
+                            <h5>Add Client</h5>
                         </div>
                         <div class="widget-content nopadding">
-                            <form class="form-horizontal" method="post" action="{{ url('/admin/add-category') }}" name="add_category" id="add_category"> {{ csrf_field() }}
+                            <form class="form-horizontal" method="post" action="{{ url('/admin/add-client') }}" name="add_client" id="add_client"> {{ csrf_field() }}
                                 <div class="control-group">
-                                    <label class="control-label">Category Name</label>
+                                    <label class="control-label">Client Name</label>
                                     <div class="controls">
-                                        <input type="text" name="category_name" id="category_name" required>
+                                        <input type="text" name="client_name" id="client_name" required>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Description</label>
+                                    <label class="control-label">Client Address</label>
                                     <div class="controls">
-                                        <textarea name="description" id="description"></textarea>
+                                        <input type="text" name="client_address" id="client_address">
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">URL (Start with http://)</label>
-                                    <div class="controls">
-                                        <input type="text" name="url" id="url">
-                                    </div>
-                                </div>
-
+                                   <label class="control-label">Select Membership</label>
+                                   <div class="controls">
+                                     <!-- <div class="select2-container" id="s2id_autogen1"> -->
+                                     <select name="membership_id" id="membership_id" style="display: none; width: 220px;" required>
+                                       @foreach($memberships as $membership)
+                                         <option value='{{ $membership->id }}'>{{ $membership->name }}</option>
+                                       @endforeach
+                                     </select>
+                                     <!-- </div> -->
+                                   </div>
+                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Enable</label>
+                                    <label class="control-label">Block</label>
                                     <div class="controls">
                                         <input type="checkbox" name="status" id="status" value="1">
                                     </div>

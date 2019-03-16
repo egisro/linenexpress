@@ -24,4 +24,15 @@ class Product extends Model
         return $this->hasOne('App\Category', 'id');
     }
 
+
+    public function price()
+    {
+        return $this->hasMany('App\Price');
+    }
+
+    public function membership()
+    {
+        return $this->belongsToMany('App\Membership', 'prices')->withPivot('price');
+    }
+
 }

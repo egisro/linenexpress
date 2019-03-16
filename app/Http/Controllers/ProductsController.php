@@ -64,15 +64,19 @@ class ProductsController extends Controller
     		// return redirect('admin/view-products')-> with('flash_message_success', 'Product has been added successfully!');
     	}
 
-    	// Categories Dropdown start
-        $categories = Category::where(['parent_id' => 0]) -> get();
-    	$categories_dropdown = "<option value='' selected disabled>Select</option>";
-    	foreach ($categories as $cat) {
-    		$categories_dropdown .= "<option value='".$cat->id."'>".$cat->name."</option>";
-    		    	}
-    	return view('admin.products.add_product')-> with(compact('categories_dropdown'));
+    	//---------------- Categories Dropdown start-----------------//
+
+      // $categories = Category::where(['parent_id' => 0]) -> get();
+    	// $categories_dropdown = "<option value='' selected disabled>Select</option>";
+    	// foreach ($categories as $cat) {
+      //                     	         $categories_dropdown .= "<option value='".$cat->id."'>".$cat->name."</option>";
+      //                     		    	}
+    	// return view('admin.products.add_product')-> with(compact('categories_dropdown'));
+      $categories = \App\Category::all('id','name');
+      // dump($categories);
+      return view('admin.products.add_product', ['categories' => $categories]);
+    //------------------------Categories Dropdown ends-------------//
     }
-    // Categories Dropdown ends
 
     public function editProduct(Request $request, $id = null) {
         if($request->isMethod('post')) {
@@ -109,7 +113,7 @@ class ProductsController extends Controller
 
         // get Product Details
         $productDetails = Product::where(['id' =>$id]) -> first();
-        
+
         // Categories Dropdown start
         $categories = Category::where(['parent_id' => 0]) -> get();
         $categories_dropdown = "<option value='' selected disabled>Select</option>";
@@ -137,14 +141,17 @@ class ProductsController extends Controller
     //
 
     public function viewProducts(){
+        // $categories_count = \App\Category::all('id')->count();
+        // $products_count = \App\Product::all('id')->count();
         $products = Product::get();
         foreach ($products as $key => $val) {
             $category_name = Category::where(['id' => $val ->category_id]) -> first();
             $products[$key] ->category_name = $category_name -> name;
         }
-        return view('admin.products.view_products') -> with(compact('products'));
+        // dump($cat_prod_count);
+        return view('admin.products.view_products',['products' => $products]);
     }
-    
+
     public function deleteProduct($id = null){
         Product::where(['id'=>$id])->delete();
         return redirect()->back()->with('flash_message_success', 'Product has been deleted successfully!');

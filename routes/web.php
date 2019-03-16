@@ -36,12 +36,18 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/admin/check-pwd', 'AdminController@chkPassword');
     Route::match(['get', 'post'], '/admin/update-pwd', 'AdminController@updatePassword');
 
+    // Clients Routes (Admin)
+    Route::match(['get', 'post'], '/admin/add-client', 'ClientController@create');
+    Route::match(['get', 'post'], '/admin/edit-client/{id}', 'ClientController@editClient');
+    Route::match(['get', 'post'], '/admin/delete-client/{id}', 'ClientController@deleteClient');
+    Route::get('/admin/view-clients', 'ClientController@index');
+
     // Categories Routres (Admin)
     Route::match(['get', 'post'], '/admin/add-category', 'CategoryController@addCategory');
     Route::match(['get', 'post'], '/admin/edit-category/{id}', 'CategoryController@editCategory');
     Route::match(['get', 'post'], '/admin/delete-category/{id}', 'CategoryController@deleteCategory');
     Route::get('/admin/view-categories', 'CategoryController@viewCategories');
-    
+
     // Products Routes
     Route::match(['get', 'post'], '/admin/add-product', 'ProductsController@addProduct');
     Route::match(['get', 'post'], '/admin/edit-product/{id}', 'ProductsController@editProduct');
@@ -52,5 +58,3 @@ Route::group(['middleware' => ['auth']], function(){
 });
 
 Route::get('/logout', 'AdminController@logout');
-
-

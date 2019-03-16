@@ -25,6 +25,9 @@ class AdminController extends Controller
     }
 
     public function dashboard(){
+        // $categories_count = \App\Category::all('id')->count();
+        // $products_count = \App\Product::all('id')->count();
+        // dump($products_count);
         return view('admin.dashboard');
     }
 
