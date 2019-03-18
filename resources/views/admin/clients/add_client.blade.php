@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="form-actions">
-                                    <input type="submit" value="Add Category" class="btn btn-success">
+                                    <input type="submit" value="Add Client" class="btn btn-success">
                                 </div>
                             </form>
                         </div>

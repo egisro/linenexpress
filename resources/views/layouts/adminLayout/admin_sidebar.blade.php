@@ -10,6 +10,12 @@
                 <li><a href="{{ url('/admin/view-clients') }}">View Clients</a></li>
             </ul>
         </li>
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Memberships</span> <span class="label label-important"></span></a>
+            <ul>
+                <li><a href="{{ url('/admin/add-membership') }}">Add Membership</a></li>
+                <li><a href="{{ url('/admin/view-memberships') }}">View Memberships</a></li>
+            </ul>
+        </li>
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Categories</span> <span class="label label-important"></span></a>
             <ul>
                 <li><a href="{{ url('/admin/add-category') }}">Add Category</a></li>

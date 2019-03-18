@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-   protected $table = 'products';
-
-    protected $fillable = [
-        'product_name',
-        'price',
-        'category_id'
-    ];
+   // protected $table = 'products';
+   //
+   //  protected $fillable = [
+   //      'product_name',
+   //      'price',
+   //      'category_id'
+   //  ];
 
 
     /**
@@ -21,9 +21,8 @@ class Product extends Model
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function category() {
-        return $this->hasOne('App\Category', 'id');
+        return $this->belongsTo('App\Category', 'category_id');
     }
-
 
     public function price()
     {
@@ -32,7 +31,7 @@ class Product extends Model
 
     public function membership()
     {
-        return $this->belongsToMany('App\Membership', 'prices')->withPivot('price');
+        return $this->belongsToMany('App\Membership');
     }
 
 }

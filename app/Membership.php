@@ -18,6 +18,6 @@ class Membership extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\Product', 'prices')->withPivot('price');
+        return $this->belongsToMany('App\Product');
     }
 }

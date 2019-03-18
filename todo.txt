@@ -9,4 +9,7 @@ padaryti pakeitimai:
 7. sukurta client, membership, price migrcijos
 8. sukurtas membership seederis
 9. pridėtas klientų viewsai ir routai
-10.
+10. migration "2019_03_16_103148_create_prices_table" pakeistas laukas "plan_id"->"membership_id"
+pakeisti ir db!!!
+11. Pridėti seederiai Prices ir Products
+12. 

@@ -15,8 +15,6 @@ class ClientController extends Controller
     public function index()
     {
       $clients = \App\Client::all();
-      // dump($clients);
-
       return view('admin.clients.view_clients',['clients' => $clients]);
     }
 
