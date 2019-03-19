@@ -15,8 +15,8 @@ class CreateMembershipProductTable extends Migration
     {
         Schema::create('membership_product', function (Blueprint $table) {
             $table->increments('id');
-            $table->smallInteger('membership_id');
-            $table->smallInteger('product_id');
+            $table->integer('membership_id')->unsigned();
+            $table->integer('product_id')->unsigned();
             $table->timestamps();
         });
     }
