@@ -3,8 +3,8 @@
 
   <div id="content">
     <div id="content-header">
-       <div id="breadcrumb"> <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="/admin/add-client/">Add Client</a> <a href="#" class="current">View Client</a> </div>
-      <h1>Clients</h1>
+       <div id="breadcrumb"> <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">View Memberships</a> <a href="/admin/add-membership/">Add Membership</a> </div>
+      <h1>Memberships</h1>
          @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -25,46 +25,42 @@
         <div class="span12">
           <div class="widget-box">
             <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-              <h5>View Clients</h5>
+              <h5>View memberships</h5>
             </div>
             <div class="widget-content nopadding">
               <table class="table table-bordered data-table">
                 <thead>
                 <tr>
-                  <th>Client ID</th>
-                  <th>Client Name</th>
-                  <th>Client Address</th>
-                  <th>Client Membership</th>
+                  <th>Membership ID</th>
+                  <th>Membership Name</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($clients as $client)
+                @foreach($memberships as $membership)
                 <tr class="gradeX">
-                  <td>{{ $client -> id }}</td>
-                  <td>{{ $client -> name }}</td>
-                  <td>{{ $client -> address }}</td>
-                  <td>{{ $client -> membership['name'] }}</td>
+                  <td>{{ $membership -> id }}</td>
+                  <td>{{ $membership -> name }}</td>
                   <td class="center">
-                    <a href="#myModal{{ $client -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
-                    <a href="{{ url('/admin/add-client/') }}" class="btn btn-success btn-mini">Add</a>
-                    <a href="{{ url('/admin/edit-client/'.$client -> id) }}" class="btn btn-primary btn-mini">Edit</a>
-                    <a id="delClient" href="{{ url('/admin/delete-client/'.$client -> id) }}" class="btn btn-danger btn-mini">Delete</a>
-                    <!-- <a rel="{{ $client->id }}" rel1="delete-client" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
+                    <a href="#myModal{{ $membership -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
+                    <a href="{{ url('/admin/add-membership/') }}" class="btn btn-success btn-mini">Add</a>
+                    <a href="{{ url('/admin/edit-membership/'.$membership -> id) }}" class="btn btn-primary btn-mini">Edit</a>
+                    <a id="delmembership" href="{{ url('/admin/delete-membership/'.$membership -> id) }}" class="btn btn-danger btn-mini">Delete</a>
+                    <!-- <a rel="{{ $membership->id }}" rel1="delete-membership" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
                   </td>
                 </tr>
 
 
-                  <div id="myModal{{ $client -> id }}" class="modal hide">
+                  <div id="myModal{{ $membership -> id }}" class="modal hide">
                     <div class="modal-header">
                       <button data-dismiss="modal" class="close" type="button">×</button>
-                      <h3>Full Details for: {{ $client -> name }}</h3>
+                      <h3>Full Details for: {{ $membership -> name }}</h3>
                     </div>
                     <div class="modal-body">
-                      <p>Name: {{ $client -> name }}</p>
-                      <p>ID: {{ $client -> id }}</p>
-                      <p>Code: {{ $client -> address }}</p>
-                      <p>Category: {{ $client -> membership_id }}</p>
+                      <p>Name: {{ $membership -> name }}</p>
+                      <p>ID: {{ $membership -> id }}</p>
+                      <p>Code: {{ $membership -> address }}</p>
+                      <p>Category: {{ $membership -> membership_id }}</p>
                     </div>
                   </div>
 

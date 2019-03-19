@@ -3,7 +3,7 @@
 
     <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">Edit Product</a> </div>
+            <div id="breadcrumb"> <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Add Product</a> <a href="#">View Products</a> <a href="#" class="current">Edit Product</a> </div>
             <h1>Products</h1>
              @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
@@ -38,7 +38,7 @@
                                     </select>
                                   </div>
                                 </div>
-                           
+
                                 <div class="control-group">
                                     <label class="control-label">Product Name</label>
                                     <div class="controls">
@@ -80,7 +80,7 @@
                                         <input type="checkbox" name="status" id="status" @if($productDetails->status=="1") checked @endif value == "1">
                                     </div>
                                 </div>
-                               
+
                                 <div class="form-actions">
                                     <input type="submit" value="Edit Product" class="btn btn-success">
                                 </div>
