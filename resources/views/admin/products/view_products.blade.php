@@ -35,7 +35,12 @@
                   <th>Category</th>
                   <th>Product Name</th>
                   <th>Product Code</th>
-                  <th>Price</th>
+                  @foreach($products[0] -> membership as $membership)
+                  <th>{{ $membership['name'] }} price</th>
+                  @endforeach
+                  <!-- <th>Silver Price</th>
+                  <th>Golden Price</th>
+                  <th>Diamond Price</th> -->
                   <th>Image</th>
                   <th>Actions</th>
                 </tr>
@@ -44,38 +49,44 @@
                 @foreach($products as $product)
                 <tr class="gradeX">
                   <td>{{ $product -> id }}</td>
-                  <td>{{ $product -> category_name }}</td>
+                  <td>{{ $product -> category -> name }}</td>
                   <td>{{ $product -> product_name }}</td>
                   <td>{{ $product -> product_code }}</td>
-                  <td>{{ $product -> price }}</td>
+                  @foreach($product -> membership as $prices_col)
                   <td>
-                    @if(!empty($product->image))
-                    <img src="{{ asset('/images/backend_images/products/small/'.$product -> image)}}" style="width:70px;">
-                    @endif
+                    @foreach($prices_col['price'] as $prices)
+                    {{ $prices['product_id'] == $product -> id ? $prices['price'] : ''}}
+                    @endforeach
+                  </td>
+                  @endforeach
+                  <td>
+
+                    <img src="{{ asset('/images/backend_images/products/small/')}}" style="width:70px;">
+
                   </td>
                   <td class="center">
-                    <a href="#myModal{{ $product -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
+                    <a href="#myModal{id }" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
                     <a href="{{ url('/admin/add-product/') }}" class="btn btn-success btn-mini">Add</a>
-                    <a href="{{ url('/admin/edit-product/'.$product -> id) }}" class="btn btn-primary btn-mini">Edit</a>
-                    <a id="delProduct" href="{{ url('/admin/delete-product/'.$product -> id) }}" class="btn btn-danger btn-mini">Delete</a>
-                    <!-- <a rel="{{ $product->id }}" rel1="delete-product" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
+                    <a href="{{ url('/admin/edit-product/') }}" class="btn btn-primary btn-mini">Edit</a>
+                    <a id="delProduct" href="" class="btn btn-danger btn-mini">Delete</a>
+                    <!-- <a rel="{id}" rel1="delete-product" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
                   </td>
                 </tr>
 
 
-                  <div id="myModal{{ $product -> id }}" class="modal hide">
+                  <div id="myModal" class="modal hide">
                     <div class="modal-header">
                       <button data-dismiss="modal" class="close" type="button">×</button>
-                      <h3>Full Details for: {{ $product -> product_name }}</h3>
+                      <h3>Full Details for: </h3>
                     </div>
                     <div class="modal-body">
 
-                      <p>Name: {{ $product -> product_name }}</p>
-                      <p>ID: {{ $product -> id }}</p>
-                      <p>Code: {{ $product -> product_code }}</p>
-                      <p>Category: {{ $product -> category_name }}</p>
-                      <p>Price: {{ $product -> price }}</p>
-                      <p>Description: {{ $product -> description }}</p>
+                      <p>Name:</p>
+                      <p>ID: </p>
+                      <p>Code: </p>
+                      <p>Category: </p>
+                      <p>Price: </p>
+                      <p>Description: </p>
                     </div>
                   </div>
 

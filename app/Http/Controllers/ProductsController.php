@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Auth;
@@ -141,14 +142,17 @@ class ProductsController extends Controller
     //
 
     public function viewProducts(){
-        // $categories_count = \App\Category::all('id')->count();
-        // $products_count = \App\Product::all('id')->count();
-        $products = Product::get();
-        foreach ($products as $key => $val) {
-            $category_name = Category::where(['id' => $val ->category_id]) -> first();
-            $products[$key] ->category_name = $category_name -> name;
-        }
-        // dump($cat_prod_count);
+
+        // $products = DB::table('products')
+        //     ->join('categories', 'categories.id', '=', 'products.category_id')
+        //     // ->join('prices', 'products.id', '=', 'prices.product_id')
+        //     ->select('products.id','categories.name as categoryName','products.product_name as productName','products.product_code')
+        //     // ->select('products.id','categories.name as categoryName','products.product_name as productName','products.product_code','prices.price','membership_id')
+        //     ->get();
+
+            $products = \App\Product::all();
+            // dd($items[0][1]);
+
         return view('admin.products.view_products',['products' => $products]);
     }
 
