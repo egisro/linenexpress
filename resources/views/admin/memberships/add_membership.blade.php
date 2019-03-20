@@ -29,85 +29,34 @@
                                   <th>Product Category</th>
                                   <th>Product Name</th>
                                   <th>Product Code</th>
-                                  <th>Standart</th>
-                                  <th>Silver</th>
-                                  <th>Gold</th>
-                                  <th>Diamond</th>
+                                  @foreach($products[0] -> membership as $membership)
+                                  <th>{{ $membership['name'] }}</th>
+                                  @endforeach
                                 </tr>
                                 </thead>
                                 <tbody>
-                                  @foreach($products[0] -> membership as $membership)
-                                  {{ $membership['name'] }}
-
+                                  @foreach($products as $product)
                                   <tr class="gradeX">
                                     <td>
                                       <div class="control-group">
-                                          <label class="control-label">White Pillowcase Price</label>
+                                          <label class="control-label">{{ $product -> product_name }} Price</label>
                                           <div class="controls">
-                                              <input type="text" name="price" id="price1" required>
+                                              <input type="text" name="price" id="{{ $product -> id }}" required>
                                           </div>
                                       </div>
                                     </td>
-                                    <td>Bed Linen</td>
-                                    <td>White Pillowcase</td>
-                                    <td>BL-STD-PC</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>77777</td>
+                                    <td>{{ $product -> category -> name }}</td>
+                                    <td>{{ $product -> product_name }}</td>
+                                    <td>{{ $product -> product_code }}</td>
+                                    @foreach($product -> membership as $prices_col)
+                                    <td>
+                                      @foreach($prices_col['price'] as $prices)
+                                      {{ $prices['product_id'] == $product -> id ? $prices['price'] : ''}}
+                                      @endforeach
+                                    </td>
+                                    @endforeach
                                   </tr>
                                   @endforeach
-                                  <tr class="gradeX">
-                                    <td>
-                                      <div class="control-group">
-                                          <label class="control-label">White Pillowcase Price</label>
-                                          <div class="controls">
-                                              <input type="text" name="price" id="price1" required>
-                                          </div>
-                                      </div>
-                                    </td>
-                                    <td>Bed Linen</td>
-                                    <td>White Pillowcase</td>
-                                    <td>BL-STD-PC</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>77777</td>
-                                  </tr>
-                                  <tr class="gradeX">
-                                    <td>
-                                      <div class="control-group">
-                                          <label class="control-label">White Pillowcase Price</label>
-                                          <div class="controls">
-                                              <input type="text" name="price" id="price1" required>
-                                          </div>
-                                      </div>
-                                    </td>
-                                    <td>Bed Linen</td>
-                                    <td>White Pillowcase</td>
-                                    <td>BL-STD-PC</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>77777</td>
-                                  </tr>
-                                  <tr class="gradeX">
-                                    <td>
-                                      <div class="control-group">
-                                          <label class="control-label">White Pillowcase Price</label>
-                                          <div class="controls">
-                                              <input type="text" name="price" id="price1" required>
-                                          </div>
-                                      </div>
-                                    </td>
-                                    <td>Bed Linen</td>
-                                    <td>White Pillowcase</td>
-                                    <td>BL-STD-PC</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>2222</td>
-                                    <td>77777</td>
-                                  </tr>
                                   </tbody>
                               </table>
                               <div class="form-actions">
