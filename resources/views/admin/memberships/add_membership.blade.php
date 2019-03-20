@@ -38,12 +38,10 @@
                                   @foreach($products as $product)
                                   <tr class="gradeX">
                                     <td>
-                                      <div class="control-group">
                                           <label class="control-label">{{ $product -> product_name }} Price</label>
                                           <div class="controls">
-                                              <input type="text" name="price" id="{{ $product -> id }}" required>
+                                              <input type="text" name="price" id="{{ $product -> id }}"  value="{{ $product -> membership[0] ->price[$product -> id-1]['price'] }}" required>
                                           </div>
-                                      </div>
                                     </td>
                                     <td>{{ $product -> category -> name }}</td>
                                     <td>{{ $product -> product_name }}</td>
