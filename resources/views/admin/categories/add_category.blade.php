@@ -37,7 +37,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Enable</label>
                                     <div class="controls">
-                                        <input type="checkbox" name="status" id="status" value="1">
+                                        <input type="checkbox" name="status" id="status" value=1>
                                     </div>
                                 </div>
 

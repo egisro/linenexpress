@@ -38,5 +38,7 @@
 <script src="{{ asset('js/backend_js/matrix.popover.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
+@yield('js')
+
 </body>
 </html>

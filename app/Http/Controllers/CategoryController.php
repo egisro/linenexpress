@@ -7,7 +7,10 @@ use App\Category;
 
 class CategoryController extends Controller
 {
+
+
     public function addCategory(Request $request){
+
         if($request->isMethod('post')){
             $data = $request->all();
             if (empty($data['status'])) {
@@ -15,7 +18,6 @@ class CategoryController extends Controller
             }else{
               $status = 1;
             }
-
            $category = new Category;
            $category->name = $data['category_name'];
            $category->description = $data['description'];
@@ -27,6 +29,8 @@ class CategoryController extends Controller
         }
         return view('admin.categories.add_category');
     }
+
+
     public function viewCategories() {
       $categories = Category::get();
         return view('admin.categories.view_categories')->with(compact('categories'));
