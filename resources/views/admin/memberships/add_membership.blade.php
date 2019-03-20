@@ -15,16 +15,104 @@
                         </div>
                         <div class="widget-content nopadding">
                             <form class="form-horizontal" method="post" action="{{ url('/admin/add-membership') }}" name="add_membership" id="add_membership"> {{ csrf_field() }}
-                                <div class="control-group">
-                                    <label class="control-label">Membership Name</label>
-                                    <div class="controls">
-                                        <input type="text" name="membership_name" id="membership_name" required>
-                                    </div>
-                                </div>
+                              <table class="table table-bordered data-table">
+                                <thead>
+                                <tr>
+                                  <th>
+                                    <!-- <div> -->
+                                        <label class="control-label">New Membership Name</label>
+                                        <div class="controls">
+                                            <input type="text" name="membership_name" id="membership_name" required>
+                                        </div>
+                                    <!-- </div> -->
+                                  </th>
+                                  <th>Product Category</th>
+                                  <th>Product Name</th>
+                                  <th>Product Code</th>
+                                  <th>Standart</th>
+                                  <th>Silver</th>
+                                  <th>Gold</th>
+                                  <th>Diamond</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach($products[0] -> membership as $membership)
+                                  {{ $membership['name'] }}
 
-                                <div class="form-actions">
-                                    <input type="submit" value="Add Membership" class="btn btn-success">
-                                </div>
+                                  <tr class="gradeX">
+                                    <td>
+                                      <div class="control-group">
+                                          <label class="control-label">White Pillowcase Price</label>
+                                          <div class="controls">
+                                              <input type="text" name="price" id="price1" required>
+                                          </div>
+                                      </div>
+                                    </td>
+                                    <td>Bed Linen</td>
+                                    <td>White Pillowcase</td>
+                                    <td>BL-STD-PC</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>77777</td>
+                                  </tr>
+                                  @endforeach
+                                  <tr class="gradeX">
+                                    <td>
+                                      <div class="control-group">
+                                          <label class="control-label">White Pillowcase Price</label>
+                                          <div class="controls">
+                                              <input type="text" name="price" id="price1" required>
+                                          </div>
+                                      </div>
+                                    </td>
+                                    <td>Bed Linen</td>
+                                    <td>White Pillowcase</td>
+                                    <td>BL-STD-PC</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>77777</td>
+                                  </tr>
+                                  <tr class="gradeX">
+                                    <td>
+                                      <div class="control-group">
+                                          <label class="control-label">White Pillowcase Price</label>
+                                          <div class="controls">
+                                              <input type="text" name="price" id="price1" required>
+                                          </div>
+                                      </div>
+                                    </td>
+                                    <td>Bed Linen</td>
+                                    <td>White Pillowcase</td>
+                                    <td>BL-STD-PC</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>77777</td>
+                                  </tr>
+                                  <tr class="gradeX">
+                                    <td>
+                                      <div class="control-group">
+                                          <label class="control-label">White Pillowcase Price</label>
+                                          <div class="controls">
+                                              <input type="text" name="price" id="price1" required>
+                                          </div>
+                                      </div>
+                                    </td>
+                                    <td>Bed Linen</td>
+                                    <td>White Pillowcase</td>
+                                    <td>BL-STD-PC</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>2222</td>
+                                    <td>77777</td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                              <div class="form-actions">
+                                  <input type="submit" value="Add Membership" class="btn btn-success">
+                              </div>
                             </form>
                         </div>
                     </div>
