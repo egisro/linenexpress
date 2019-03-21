@@ -11,7 +11,7 @@ use Image;
 use App\Category;
 use App\Product;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     public function addProduct(Request $request){
 
@@ -20,6 +20,7 @@ class ProductsController extends Controller
     		if (empty($data['category_id'])) {
     			return redirect()-> back()-> with('flash_message_error', 'Field "Select Category" is missing!');
     		}
+        dd($data);
     		$product = new Product;
     		$product -> category_id = $data['category_id'];
     		$product -> product_name = $data['product_name'];
@@ -29,7 +30,6 @@ class ProductsController extends Controller
     		} else {
     			$product -> description = '';
     		}
-    		$product -> price = $data['price'];
 
     		// Upload Image
     		if($request->hasFile('image')) {
@@ -58,9 +58,17 @@ class ProductsController extends Controller
                 $status = 1;
             }
             $product->status = $status;
+            $product -> save();
+            $productId = Product::orderby('created_at', 'desc')->first();
+            $price = new Price;
+            $price -> product_id = $productId;
+            // $price -> 2 = $data['standart_price'];
+            // $price -> 3 = $data['silver_price'];
+            // $price -> 4 = $data['golden_price'];
+            // $price -> 5 = $data['diamond_price'];
 
     		// $product -> image = '';
-    		$product -> save();
+
             return redirect()-> back()-> with('flash_message_success', 'Product has been added successfully!');
     		// return redirect('admin/view-products')-> with('flash_message_success', 'Product has been added successfully!');
     	}

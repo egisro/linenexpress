@@ -25,6 +25,7 @@ class MembershipController extends Controller
     public function create()
     {
       $products = \App\Product::all();
+      // dd($products[0] -> membership[0]->price);
       return view('admin.memberships.add_membership',['products'=>$products]);
     }
 

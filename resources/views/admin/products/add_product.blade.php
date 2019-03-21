@@ -47,7 +47,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Product Name</label>
                                     <div class="controls">
-                                        <input type="text" name="product_name" id="product_name">
+                                        <input type="text" name="product_name" id="product_name" required>
                                     </div>
                                 </div>
                                   <div class="control-group">
@@ -65,25 +65,25 @@
                                  <div class="control-group">
                                     <label class="control-label">Standart price</label>
                                     <div class="controls">
-                                        <input type="text" name="standart_price" id="standart_price">
+                                        <input type="text" name="standart_price" id="standart_price" required>
                                     </div>
                                 </div>
                                  <div class="control-group">
                                     <label class="control-label">Silver price</label>
                                     <div class="controls">
-                                        <input type="text" name="silver_price" id="silver_price">
+                                        <input type="text" name="silver_price" id="silver_price" required>
                                     </div>
                                 </div>
                                  <div class="control-group">
                                     <label class="control-label">Golden price</label>
                                     <div class="controls">
-                                        <input type="text" name="golden_price" id="golden_price">
+                                        <input type="text" name="golden_price" id="golden_price" required>
                                     </div>
                                 </div>
                                  <div class="control-group">
                                     <label class="control-label">Diamond price</label>
                                     <div class="controls">
-                                        <input type="text" name="diamond_price" id="diamond_price">
+                                        <input type="text" name="diamond_price" id="diamond_price" required>
                                     </div>
                                 </div>
                                  <div class="control-group">

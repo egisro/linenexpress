@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Category;
+use App\Product;
 
 class CategoryController extends Controller
 {
@@ -32,12 +34,23 @@ class CategoryController extends Controller
 
 
     public function viewCategories() {
-      $categories = Category::get();
-        return view('admin.categories.view_categories')->with(compact('categories'));
+      $categories = Category::all();
+      $products = Product::all();
+        return view('admin.categories.view_categories',['categories'=>$categories,'products'=>$products]);
     }
 
      public function deleteCategory($id) {
       if(!empty($id)){
+        $products = Product::where('category_id', '=', $id)->get();
+        $without_category = Category::where('name', '=', 'Without category')->get();
+        // $products->category_id = $without_category[0]->id;
+        foreach ($products as $product) {
+          DB::table('products')
+              ->where('id', $product->id)
+              ->update(['category_id' => $without_category[0]->id]);
+        }
+
+
         Category::where(['id' => $id]) -> delete();
         return redirect() -> back() -> with('flash_message_success', 'Category deleted successfully!');
       }
