@@ -88,7 +88,7 @@
                     </tbody>
                   </table>
               </div>
-              All products in category <b id="cat"></b> will be remark as "without category"!
+              All products in category <b id="cat"></b> will be remarked as <b>"Without category"</b>!
             </div>
             </div>
 

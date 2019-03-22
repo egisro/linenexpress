@@ -46,7 +46,6 @@
                     <a href="{{ url('/admin/add-membership/') }}" class="btn btn-success btn-mini">Add</a>
                     <a href="{{ url('/admin/edit-membership/'.$membership -> id) }}" class="btn btn-primary btn-mini">Edit</a>
                     <a id="delmembership" href="{{ url('/admin/delete-membership/'.$membership -> id) }}" class="btn btn-danger btn-mini">Delete</a>
-                    <!-- <a rel="{{ $membership->id }}" rel1="delete-membership" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
                   </td>
                 </tr>
 
