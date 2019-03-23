@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Price extends Model
 {
+    protected $fillable = ['price'];
     // public function membership()
     // {
     //     return $this->belongTo('App\Membership', 'membership_id');

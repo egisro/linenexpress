@@ -3,8 +3,13 @@
 
     <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">Edit Product</a> </div>
-            <h1>Products</h1>
+            <div id="breadcrumb">
+              <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+              <a href="/admin/memberships/create">Add Membership</a>
+              <a href="/admin/memberships">View Memberships</a>
+              <a href="#" class="current">Edit Membership</a>
+            </div>
+            <h1>Memberships</h1>
              @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
                     <button type="button" class="close" data-dismiss="alert">×</button>
@@ -24,67 +29,59 @@
                 <div class="span12">
                     <div class="widget-box">
                         <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-                            <h5>Edit Product</h5>
+                            <h5>Edit Membership</h5>
                         </div>
                         <div class="widget-content nopadding">
-                            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{ url('/admin/edit-product/'.$productDetails->id) }}" name="edit_product" id="edit_product" novalidate="novalidate"> {{ csrf_field() }}
-
-                               <div class="control-group">
-                                  <label class="control-label">Select Category</label>
-                                  <div class="controls">
-                                    <div class="select2-container" id="s2id_autogen1">
-                                    <select name="category_id" id="category_id" style="display: none; width: 220px;">
-                                          <?php echo $categories_dropdown; ?>
-                                    </select>
-                                  </div>
-                                </div>
-                           
-                                <div class="control-group">
-                                    <label class="control-label">Product Name</label>
-                                    <div class="controls">
-                                        <input type="text" name="product_name" id="product_name" value="{{ $productDetails ->product_name }}">
-                                    </div>
-                                </div>
-                                  <div class="control-group">
-                                    <label class="control-label">Product Code</label>
-                                    <div class="controls">
-                                        <input type="text" name="product_code" id="product_code" value="{{ $productDetails ->product_code }}">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Description</label>
-                                    <div class="controls">
-                                        <textarea name="description" id="description">{{ $productDetails -> description }}</textarea>
-                                    </div>
-                                </div>
-                                 <div class="control-group">
-                                    <label class="control-label">Price</label>
-                                    <div class="controls">
-                                        <input type="text" name="price" id="price" value="{{ $productDetails -> price }}">
-                                    </div>
-                                </div>
-                                 <div class="control-group">
-                                    <label class="control-label">Image</label>
-                                    <div class="controls">
-                                        <input type="file" name="image" id="image">
-                                        <input type="hidden" name="current_image" value="{{ $productDetails->image }}">
-                                        @if(!empty($productDetails->image))
-                                        <img style="width:50px;" src="{{ asset('/images/backend_images/products/small/'.$productDetails->image) }}"> | <a href="{{ url('/admin/delete-product-image/'.$productDetails->id ) }}">Delete</a>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                 <div class="control-group">
-                                    <label class="control-label">Enable</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="status" id="status" @if($productDetails->status=="1") checked @endif value == "1">
-                                    </div>
-                                </div>
-                               
-                                <div class="form-actions">
-                                    <input type="submit" value="Edit Product" class="btn btn-success">
-                                </div>
-                            </form>
+                          <form class="form-horizontal" method="post" action="{{ url('/admin/memberships', $membership_cur -> id ) }}">
+                            @csrf
+                            @method('PUT')
+                            <table class="table table-bordered data-table">
+                              <thead>
+                              <tr>
+                                <th>
+                                  <!-- <div> -->
+                                      <label class="control-label">Membership Name</label>
+                                      <div class="controls">
+                                          <input type="text" name="membership_name" id="membership_{{ $membership_cur->id }}" value="{{ $membership_cur -> name }}" required>
+                                      </div>
+                                  <!-- </div> -->
+                                </th>
+                                <th>Product Category</th>
+                                <th>Product Name</th>
+                                <th>Product Code</th>
+                                @foreach($products[0] -> membership as $membership)
+                                <th>{{ $membership['name'] }}</th>
+                                @endforeach
+                              </tr>
+                              </thead>
+                              <tbody>
+                                @foreach($products as $product)
+                                <tr class="gradeX">
+                                  <td>
+                                        <label class="control-label">{{ $product -> product_name }} Price</label>
+                                        <div class="controls">
+                                            <input type="hidden" name="products[{{$loop->index}}][id]" value="{{ $membership_cur->price[($product->id)-1]['id'] }}" >
+                                            <input type="text" name="products[{{$loop->index}}][price]" value="{{ $membership_cur->price[($product->id)-1]['price'] }}" required>
+                                        </div>
+                                  </td>
+                                  <td>{{ $product -> category -> name }}</td>
+                                  <td>{{ $product -> product_name }}</td>
+                                  <td>{{ $product -> product_code }}</td>
+                                  @foreach($product -> membership as $prices_col)
+                                  <td>
+                                    @foreach($prices_col['price'] as $prices)
+                                    {{ $prices['product_id'] == $product -> id ? $prices['price'] : ''}}
+                                    @endforeach
+                                  </td>
+                                  @endforeach
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            <div class="form-actions">
+                                <input type="submit" value="Update Membership" class="btn btn-success">
+                            </div>
+                          </form>
                         </div>
                     </div>
                 </div>
@@ -92,4 +89,4 @@
         </div>
     </div>
 
-@endsection()Products
+@stop

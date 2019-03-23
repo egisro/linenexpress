@@ -42,24 +42,21 @@ Route::group(['middleware' => ['auth']], function(){
     Route::match(['get', 'post'], '/admin/delete-client/{id}', 'ClientController@deleteClient');
     Route::get('/admin/view-clients', 'ClientController@index');
 
+
     // Memberships Routes (Admin)
-    Route::match(['get', 'post'], '/admin/add-membership', 'MembershipController@create');
-    Route::match(['get', 'post'], '/admin/edit-membership/{id}', 'MembershipController@editClient');
-    Route::match(['get', 'post'], '/admin/delete-membership/{id}', 'MembershipController@deleteClient');
-    Route::get('/admin/view-memberships', 'MembershipController@index');
+    Route::resource('/admin/memberships', 'MembershipController');
+
 
     // Categories Routres (Admin)
-    Route::match(['get', 'post'], '/admin/add-category', 'CategoryController@addCategory');
-    Route::match(['get', 'post'], '/admin/edit-category/{id}', 'CategoryController@editCategory');
-    Route::match(['get', 'post', 'delete'], '/admin/delete-category/{id}', 'CategoryController@deleteCategory');
-    Route::get('/admin/view-categories', 'CategoryController@viewCategories');
+    Route::resource('/admin/categories', 'CategoryController');
+
 
     // Products Routes
     Route::match(['get', 'post'], '/admin/add-product', 'ProductController@addProduct');
     Route::match(['get', 'post'], '/admin/edit-product/{id}', 'ProductController@editProduct');
     Route::get('/admin/view-products', 'ProductController@viewProducts');
     Route::get('/admin/delete-product/{id}', 'ProductController@deleteProduct');
-    Route::get('/admin/delete-product-image/{id}', 'ProductController@deleteProductImage');
+    Route::delete('/admin/delete-product-image/{id}', 'ProductController@deleteProductImage');
 
 });
 

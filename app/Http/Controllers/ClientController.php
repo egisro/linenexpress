@@ -25,7 +25,6 @@ class ClientController extends Controller
      */
     public function create()
     {
-
         $memberships = \App\Membership::all('id','name');
         return view('admin.clients.add_client',['memberships'=>$memberships]);
     }

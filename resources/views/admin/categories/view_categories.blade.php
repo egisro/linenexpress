@@ -3,7 +3,11 @@
 
   <div id="content">
     <div id="content-header">
-       <div id="breadcrumb"> <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="/admin/add-category/">Add Category</a> <a href="#" class="current">View Category</a> </div>
+       <div id="breadcrumb">
+         <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+         <a href="/admin/categories/create/">Add Category</a>
+         <a href="/admin/categories/" class="current">View Category</a>
+       </div>
       <h1>Categories</h1>
          @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
@@ -45,7 +49,7 @@
                   <td class="category_url">{{ $category -> url }}</td>
                   <td class="center">
                     @if($category -> name != 'Without category')
-                    <a href="{{ url('/admin/edit-category/'.$category -> id) }}" class="btn btn-primary btn-mini">Edit</a>
+                    <a href="{{ url("/admin/categories/{$category->id}/edit") }}" class="btn btn-primary btn-mini">Edit</a>
                     <a  href="#deleteModal" data-toggle="modal" data-id="{{ $category -> id }}" class="btn btn-danger btn-mini delete">Delete</a>
                     @endif
                   </td>
@@ -77,10 +81,10 @@
                         <td id='category_name'></td>
                         <td id='category_url'></td>
                         <td>
-                          <form class="" action="{{ url('/admin/delete-category', '') }}" id="form_category_id" method="post">
+                          <form class="" action="{{ url('/admin/categories', '') }}" id="form_category_id" method="post">
                             <button type="button" class="btn btn-secondary btn-mini" data-dismiss="modal">Close</button>
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            {{ method_field('DELETE') }}
+                            @csrf
+                            @method('DELETE')
                             <button class="btn btn-danger btn-mini">Delete</button>
                           </form>
                         </td>

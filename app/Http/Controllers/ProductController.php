@@ -10,6 +10,7 @@ use Session;
 use Image;
 use App\Category;
 use App\Product;
+use App\Price;
 
 class ProductController extends Controller
 {
@@ -20,7 +21,7 @@ class ProductController extends Controller
     		if (empty($data['category_id'])) {
     			return redirect()-> back()-> with('flash_message_error', 'Field "Select Category" is missing!');
     		}
-        dd($data);
+        // dd($data);
     		$product = new Product;
     		$product -> category_id = $data['category_id'];
     		$product -> product_name = $data['product_name'];
@@ -159,7 +160,7 @@ class ProductController extends Controller
         //     ->get();
 
             $products = \App\Product::all();
-            // dd($items[0][1]);
+            // dd($products[0]->membership);
 
         return view('admin.products.view_products',['products' => $products]);
     }
