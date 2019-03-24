@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Client;
+use App\Membership;
+
 
 class ClientController extends Controller
 {
@@ -14,9 +16,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-      $clients = \App\Client::all();
-      // dump($clients);
-
+      $clients = Client::all();
       return view('admin.clients.view_clients',['clients' => $clients]);
     }
 
@@ -27,8 +27,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-
-        $memberships = \App\Membership::all('id','name');
+        $memberships = Membership::all('id','name');
         return view('admin.clients.add_client',['memberships'=>$memberships]);
     }
 
@@ -40,7 +39,12 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $client = new Client;
+      $client->name = $request['name'];
+      $client->address = $request['address'];
+      $client->membership_id = $request['membership_id'];
+      $client->save();
+      return redirect ('/admin/clients')->with('flash_message_success', 'Client added successfully!');
     }
 
     /**
@@ -62,7 +66,9 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+      $client = Client::find($id);
+      $memberships = Membership::all('id','name');
+      return view('admin.clients.edit_client',['client' => $client,'memberships'=>$memberships]);
     }
 
     /**
@@ -74,7 +80,9 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+        Client::where(['id'=> $id])->update(['name'=>$request['name'], 'address'=>$request['address'], 'membership_id'=>$request['membership_id']]);
+        return redirect ('/admin/clients')->with('flash_message_success', 'Client updated successfully!');
     }
 
     /**
@@ -85,6 +93,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+      Client::find($id) -> delete();
+      return redirect('/admin/clients')->with('flash_message_success', 'Client deleted successfully!');
     }
 }

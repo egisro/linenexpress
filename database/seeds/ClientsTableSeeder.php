@@ -1,6 +1,8 @@
 <?php
+
 use Illuminate\Database\Seeder;
-class MembershipsTableSeeder extends Seeder
+
+class ClientsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -9,24 +11,35 @@ class MembershipsTableSeeder extends Seeder
      */
     public function run()
     {
-      $memberships = [
+      $data = [
           ['id' => 1,
-          'name' => "Standart",
+          'name' => 'Darius',
+          'address' => 'Apuoku g. 25',
+          'membership_id' => 2,
           'created_at' => '2019-03-16 00:00:00',
           'updated_at' => '2019-03-16 00:00:00'],
+
           ['id' => 2,
-          'name' => "Silver",
+          'name' => 'Egidijus',
+          'address' => 'Antakalnio g. 5',
+          'membership_id' => 3,
           'created_at' => '2019-03-16 00:00:00',
           'updated_at' => '2019-03-16 00:00:00'],
+
           ['id' => 3,
-          'name' => "Gold",
+          'name' => 'Jonis',
+          'address' => 'Žirmūnų g. 16',
+          'membership_id' => 2,
           'created_at' => '2019-03-16 00:00:00',
           'updated_at' => '2019-03-16 00:00:00'],
+
           ['id' => 4,
-          'name' => "Diamond",
+          'name' => 'Petriukas',
+          'address' => 'Nežiniukų g. 8',
+          'membership_id' => 4,
           'created_at' => '2019-03-16 00:00:00',
           'updated_at' => '2019-03-16 00:00:00'],
       ];
-      DB::table('memberships')->insert($memberships);
+      DB::table('clients')->insert($data);
     }
 }

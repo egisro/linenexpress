@@ -3,86 +3,51 @@
 
     <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Products</a> <a href="#" class="current">Edit Product</a> </div>
-            <h1>Products</h1>
-             @if(Session::has('flash_message_error'))
-                <div class="alert alert-error alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{!! session('flash_message_error') !!}</strong>
-                </div>
-            @endif
-
-            @if(Session::has('flash_message_success'))
-                <div class="alert alert-success alert-block">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>{!! session('flash_message_success') !!}</strong>
-                </div>
-            @endif
+            <div id="breadcrumb">
+              <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+              <a href="/admin/clients/create">Add Client</a>
+              <a href="/admin/clients">View Clients</a>
+              <a href="#" class="current">Edit Client</a>
+            </div>
+            <h1>Clients</h1>
         </div>
         <div class="container-fluid"><hr>
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">
                         <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-                            <h5>Edit Product</h5>
+                            <h5>Edit Client</h5>
                         </div>
                         <div class="widget-content nopadding">
-                            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{ url('/admin/edit-product/'.$productDetails->id) }}" name="edit_product" id="edit_product" novalidate="novalidate"> {{ csrf_field() }}
-
-                               <div class="control-group">
-                                  <label class="control-label">Select Category</label>
-                                  <div class="controls">
-                                    <div class="select2-container" id="s2id_autogen1">
-                                    <select name="category_id" id="category_id" style="display: none; width: 220px;">
-                                          <?php echo $categories_dropdown; ?>
-                                    </select>
-                                  </div>
-                                </div>
-                           
+                            <form class="form-horizontal" method="post" action="{{ url('/admin/clients',$client->id) }}" name="edit_client">
+                              @csrf
+                              @method('PUT')
                                 <div class="control-group">
-                                    <label class="control-label">Product Name</label>
+                                    <label class="control-label">Client Name</label>
                                     <div class="controls">
-                                        <input type="text" name="product_name" id="product_name" value="{{ $productDetails ->product_name }}">
-                                    </div>
-                                </div>
-                                  <div class="control-group">
-                                    <label class="control-label">Product Code</label>
-                                    <div class="controls">
-                                        <input type="text" name="product_code" id="product_code" value="{{ $productDetails ->product_code }}">
+                                        <input type="text" name="name" id="name" value="{{ $client->name }}" required>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Description</label>
+                                    <label class="control-label">Client Address</label>
                                     <div class="controls">
-                                        <textarea name="description" id="description">{{ $productDetails -> description }}</textarea>
+                                        <input type="text" name="address" id="address" value="{{ $client->address }}">
                                     </div>
                                 </div>
-                                 <div class="control-group">
-                                    <label class="control-label">Price</label>
-                                    <div class="controls">
-                                        <input type="text" name="price" id="price" value="{{ $productDetails -> price }}">
-                                    </div>
-                                </div>
-                                 <div class="control-group">
-                                    <label class="control-label">Image</label>
-                                    <div class="controls">
-                                        <input type="file" name="image" id="image">
-                                        <input type="hidden" name="current_image" value="{{ $productDetails->image }}">
-                                        @if(!empty($productDetails->image))
-                                        <img style="width:50px;" src="{{ asset('/images/backend_images/products/small/'.$productDetails->image) }}"> | <a href="{{ url('/admin/delete-product-image/'.$productDetails->id ) }}">Delete</a>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                 <div class="control-group">
-                                    <label class="control-label">Enable</label>
-                                    <div class="controls">
-                                        <input type="checkbox" name="status" id="status" @if($productDetails->status=="1") checked @endif value == "1">
-                                    </div>
-                                </div>
-                               
+                                <div class="control-group">
+                                   <label class="control-label">Select Membership</label>
+                                   <div class="controls">
+                                     <!-- <div class="select2-container" id="s2id_autogen1"> -->
+                                     <select name="membership_id" id="membership_id" style="width: 220px;" required>
+                                       @foreach($memberships as $membership)
+                                         <option value='{{ $membership->id }}' {{ $membership->id === $client->membership_id ? 'selected' : '' }}>{{ $membership->name }}</option>
+                                       @endforeach
+                                     </select>
+                                     <!-- </div> -->
+                                   </div>
+                                 </div>
                                 <div class="form-actions">
-                                    <input type="submit" value="Edit Product" class="btn btn-success">
+                                    <input type="submit" value="Update Client" class="btn btn-success">
                                 </div>
                             </form>
                         </div>
@@ -92,4 +57,4 @@
         </div>
     </div>
 
-@endsection()Products
+@endsection()

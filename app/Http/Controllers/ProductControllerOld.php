@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Auth;
@@ -9,8 +10,9 @@ use Session;
 use Image;
 use App\Category;
 use App\Product;
+use App\Price;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     public function addProduct(Request $request){
 
@@ -19,6 +21,7 @@ class ProductsController extends Controller
     		if (empty($data['category_id'])) {
     			return redirect()-> back()-> with('flash_message_error', 'Field "Select Category" is missing!');
     		}
+        // dd($data);
     		$product = new Product;
     		$product -> category_id = $data['category_id'];
     		$product -> product_name = $data['product_name'];
@@ -28,7 +31,6 @@ class ProductsController extends Controller
     		} else {
     			$product -> description = '';
     		}
-    		$product -> price = $data['price'];
 
     		// Upload Image
     		if($request->hasFile('image')) {
@@ -57,10 +59,18 @@ class ProductsController extends Controller
                 $status = 1;
             }
             $product->status = $status;
+            $product -> save();
+            $productId = Product::orderby('created_at', 'desc')->first();
+            $price = new Price;
+            $price -> product_id = $productId;
+            // $price -> 2 = $data['standart_price'];
+            // $price -> 3 = $data['silver_price'];
+            // $price -> 4 = $data['golden_price'];
+            // $price -> 5 = $data['diamond_price'];
 
     		// $product -> image = '';
-    		$product -> save();
-            return redirect()-> back()-> with('flash_message_success', 'Product has been added successfully!');
+
+            return redirect()-> back()-> with('flash_message_success', 'Product has been created successfully!');
     		// return redirect('admin/view-products')-> with('flash_message_success', 'Product has been added successfully!');
     	}
 
@@ -141,14 +151,17 @@ class ProductsController extends Controller
     //
 
     public function viewProducts(){
-        // $categories_count = \App\Category::all('id')->count();
-        // $products_count = \App\Product::all('id')->count();
-        $products = Product::get();
-        foreach ($products as $key => $val) {
-            $category_name = Category::where(['id' => $val ->category_id]) -> first();
-            $products[$key] ->category_name = $category_name -> name;
-        }
-        // dump($cat_prod_count);
+
+        // $products = DB::table('products')
+        //     ->join('categories', 'categories.id', '=', 'products.category_id')
+        //     // ->join('prices', 'products.id', '=', 'prices.product_id')
+        //     ->select('products.id','categories.name as categoryName','products.product_name as productName','products.product_code')
+        //     // ->select('products.id','categories.name as categoryName','products.product_name as productName','products.product_code','prices.price','membership_id')
+        //     ->get();
+
+            $products = \App\Product::all();
+            // dd($products[0]->membership);
+
         return view('admin.products.view_products',['products' => $products]);
     }
 

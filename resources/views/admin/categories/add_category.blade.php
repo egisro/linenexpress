@@ -3,7 +3,11 @@
 
     <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Categories</a> <a href="#" class="current">Add Category</a> </div>
+            <div id="breadcrumb">
+              <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+              <a href="/admin/categories/create/" class="current">Add Category</a>
+              <a href="/admin/categories/">View Category</a>
+            </div>
             <h1>Categories</h1>
         </div>
         <div class="container-fluid"><hr>
@@ -14,7 +18,8 @@
                             <h5>Add Category</h5>
                         </div>
                         <div class="widget-content nopadding">
-                            <form class="form-horizontal" method="post" action="{{ url('/admin/add-category') }}" name="add_category" id="add_category"> {{ csrf_field() }}
+                            <form class="form-horizontal" method="post" action="{{ url('/admin/categories') }}">
+                            @csrf
                                 <div class="control-group">
                                     <label class="control-label">Category Name</label>
                                     <div class="controls">
@@ -37,7 +42,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Enable</label>
                                     <div class="controls">
-                                        <input type="checkbox" name="status" id="status" value="1">
+                                        <input type="checkbox" name="status" id="status" value=1>
                                     </div>
                                 </div>
 

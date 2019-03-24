@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Membership extends Model
 {
+
     public function client()
     {
         return $this->hasMany('App\Client');
@@ -18,6 +19,6 @@ class Membership extends Model
 
     public function product()
     {
-        return $this->belongsToMany('App\Product', 'prices')->withPivot('price');
+        return $this->belongsToMany('App\Product');
     }
 }

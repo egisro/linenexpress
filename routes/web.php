@@ -37,23 +37,16 @@ Route::group(['middleware' => ['auth']], function(){
     Route::match(['get', 'post'], '/admin/update-pwd', 'AdminController@updatePassword');
 
     // Clients Routes (Admin)
-    Route::match(['get', 'post'], '/admin/add-client', 'ClientController@create');
-    Route::match(['get', 'post'], '/admin/edit-client/{id}', 'ClientController@editClient');
-    Route::match(['get', 'post'], '/admin/delete-client/{id}', 'ClientController@deleteClient');
-    Route::get('/admin/view-clients', 'ClientController@index');
+    Route::resource('/admin/clients', 'ClientController');
+
+    // Memberships Routes (Admin)
+    Route::resource('/admin/memberships', 'MembershipController');
 
     // Categories Routres (Admin)
-    Route::match(['get', 'post'], '/admin/add-category', 'CategoryController@addCategory');
-    Route::match(['get', 'post'], '/admin/edit-category/{id}', 'CategoryController@editCategory');
-    Route::match(['get', 'post'], '/admin/delete-category/{id}', 'CategoryController@deleteCategory');
-    Route::get('/admin/view-categories', 'CategoryController@viewCategories');
+    Route::resource('/admin/categories', 'CategoryController');
 
     // Products Routes
-    Route::match(['get', 'post'], '/admin/add-product', 'ProductsController@addProduct');
-    Route::match(['get', 'post'], '/admin/edit-product/{id}', 'ProductsController@editProduct');
-    Route::get('/admin/view-products', 'ProductsController@viewProducts');
-    Route::get('/admin/delete-product/{id}', 'ProductsController@deleteProduct');
-    Route::get('/admin/delete-product-image/{id}', 'ProductsController@deleteProductImage');
+    Route::resource('/admin/products', 'ProductController');
 
 });
 
