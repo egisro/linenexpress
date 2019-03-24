@@ -80,9 +80,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $data = $request->all();
-      if(isset($data['status'])?$status = 1:$status = 0);
-      Category::where(['id'=> $id])->update(['name'=>$data['category_name'], 'description'=>$data['description'], 'url'=>$data['url'], 'status'=>$status]);
+      // $data = $request->all();
+      if(isset($request['status'])?$status = 1:$status = 0);
+      Category::where(['id'=> $id])->update(['name'=>$request['category_name'], 'description'=>$request['description'], 'url'=>$request['url'], 'status'=>$status]);
       return redirect ('/admin/categories')->with('flash_message_success', 'Category updated successfully!');
     }
 
@@ -97,11 +97,10 @@ class CategoryController extends Controller
       if(isset($id)){
         $products = Product::where('category_id', '=', $id)->get();
         $without_category = Category::where('name', '=', 'Without category')->get();
-        // $products->category_id = $without_category[0]->id;
         foreach ($products as $product) {
           Product::where('id', $product->id)->update(['category_id' => $without_category[0]->id]);
         }
-        Category::where(['id' => $id]) -> delete();
+        Category::find($id) -> delete();
         return redirect('/admin/categories')->with('flash_message_success', 'Category deleted successfully!');
       }
     }

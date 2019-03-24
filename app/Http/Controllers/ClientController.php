@@ -66,7 +66,9 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+      $client = Client::find($id);
+      $memberships = Membership::all('id','name');
+      return view('admin.clients.edit_client',['client' => $client,'memberships'=>$memberships]);
     }
 
     /**
@@ -78,7 +80,9 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+        Client::where(['id'=> $id])->update(['name'=>$request['name'], 'address'=>$request['address'], 'membership_id'=>$request['membership_id']]);
+        return redirect ('/admin/clients')->with('flash_message_success', 'Client updated successfully!');
     }
 
     /**
@@ -89,6 +93,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+      Client::find($id) -> delete();
+      return redirect('/admin/clients')->with('flash_message_success', 'Client deleted successfully!');
     }
 }

@@ -6,7 +6,7 @@
        <div id="breadcrumb">
          <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
          <a href="/admin/clients/create">Add Client</a>
-         <a href="/admin/clients" class="current">View Client</a>
+         <a href="/admin/clients" class="current">View Clients</a>
        </div>
       <h1>Clients</h1>
          @if(Session::has('flash_message_error'))
