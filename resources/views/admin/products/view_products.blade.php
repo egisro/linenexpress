@@ -3,7 +3,11 @@
 
   <div id="content">
     <div id="content-header">
-       <div id="breadcrumb"> <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="/admin/add-product/">Add Product</a> <a href="#" class="current">View Products</a> </div>
+       <div id="breadcrumb">
+         <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+         <a href="/admin/products/create/">Add Product</a>
+         <a href="/admin/products/" class="current">View Products</a>
+       </div>
       <h1>Products</h1>
          @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
@@ -62,10 +66,12 @@
                     @endif
                   </td>
                   <td class="center">
-                    <a href="{{ url('/admin/edit-product/') }}" class="btn btn-primary btn-mini">Edit</a>
-                    <a id="delProduct" href="{{ url('/admin/delete-product/' .$product -> id) }}" class="btn btn-danger btn-mini">Delete</a>
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @method('DELETE')
+                    <form class="" action="{{ url('/admin/products', $product -> id) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <a href="{{ url("/admin/products/{$product -> id}/edit") }}" class="btn btn-primary btn-mini">Edit</a>
+                        <button type="submit" class="btn btn-danger btn-mini">Delete</button>
+                      </form>
                   </td>
                 </tr>
 

@@ -3,7 +3,11 @@
 
     <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Add Product</a> <a href="/admin/view-products/">View Products</a> </div>
+            <div id="breadcrumb">
+              <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+              <a href="/admin/products/create/" class="current">Add Product</a>
+              <a href="/admin/products/">View Products</a>
+            </div>
             <h1>Products</h1>
              @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
@@ -27,14 +31,14 @@
                             <h5>Add Product</h5>
                         </div>
                         <div class="widget-content nopadding">
-                            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{ url('/admin/add-product') }}" name="add_product" id="add_product" novalidate="novalidate"> {{ csrf_field() }}
-
+                            <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{{ url('/admin/products') }}" name="add_product" id="add_product">
+                              @csrf
                                <div class="control-group">
                                   <label class="control-label">Select Category</label>
                                   <div class="controls">
                                     <!-- <div class="select2-container" id="s2id_autogen1"> -->
-                                    <select name="category_id" id="category_id" style="display: none; width: 220px;" required>
-                                      <option value='0' disabled selected>Select</option>
+                                    <select name="category_id" id="category_id" style="width: 220px" required>
+                                      <option>Select</option>
                                       @foreach($categories as $category)
                                         <option value='{{ $category->id }}'>{{ $category->name }}</option>
                                       @endforeach
@@ -47,7 +51,7 @@
                                 <div class="control-group">
                                     <label class="control-label">Product Name</label>
                                     <div class="controls">
-                                        <input type="text" name="product_name" id="product_name" required>
+                                        <input type="text" name="product_name" required>
                                     </div>
                                 </div>
                                   <div class="control-group">
@@ -62,13 +66,16 @@
                                         <textarea name="description" id="description"></textarea>
                                     </div>
                                 </div>
+                                @foreach($memberships as $membership)
                                  <div class="control-group">
-                                    <label class="control-label">Standart price</label>
+                                    <label class="control-label">{{$membership->name}} price</label>
                                     <div class="controls">
-                                        <input type="text" name="standart_price" id="standart_price" required>
+                                        <input type="hidden" name="id[]" value="{{$membership->id}}">
+                                        <input type="text" name="price[]" required>
                                     </div>
                                 </div>
-                                 <div class="control-group">
+                                @endforeach
+                                 <!-- <div class="control-group">
                                     <label class="control-label">Silver price</label>
                                     <div class="controls">
                                         <input type="text" name="silver_price" id="silver_price" required>
@@ -85,7 +92,7 @@
                                     <div class="controls">
                                         <input type="text" name="diamond_price" id="diamond_price" required>
                                     </div>
-                                </div>
+                                </div> -->
                                  <div class="control-group">
                                     <label class="control-label">Image</label>
                                     <div class="controls">

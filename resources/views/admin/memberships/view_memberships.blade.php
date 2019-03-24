@@ -46,12 +46,16 @@
                   <td>{{ $membership -> id }}</td>
                   <td>{{ $membership -> name }}</td>
                   <td class="center">
+                    @if($membership -> id != 1)
                     <form class="" action="{{ url('/admin/memberships', $membership -> id) }}" method="post">
                       @csrf
                       @method('DELETE')
                       <a href="{{ url("/admin/memberships/{$membership->id}/edit/") }}" class="btn btn-primary btn-mini">Edit</a>
                       <button class="btn btn-danger btn-mini">Delete</button>
                     </form>
+                    @else
+                      <a href="{{ url("/admin/memberships/{$membership->id}/edit/") }}" class="btn btn-primary btn-mini">Edit</a>
+                    @endif
                   </td>
                 </tr>
 

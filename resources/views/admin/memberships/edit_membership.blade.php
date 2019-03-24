@@ -60,8 +60,8 @@
                                   <td>
                                         <label class="control-label">{{ $product -> product_name }} Price</label>
                                         <div class="controls">
-                                            <input type="hidden" name="products[{{$loop->index}}][id]" value="{{ $membership_cur->price[($product->id)-1]['id'] }}" >
-                                            <input type="text" name="products[{{$loop->index}}][price]" value="{{ $membership_cur->price[($product->id)-1]['price'] }}" required>
+                                            <input type="hidden" name="products[{{$loop->index}}][id]" value="{{ $membership_cur->price[$loop->index]['id'] }}" >
+                                            <input type="text" name="products[{{$loop->index}}][price]" value="{{ $membership_cur->price[$loop->index]['price'] }}" required>
                                         </div>
                                   </td>
                                   <td>{{ $product -> category -> name }}</td>

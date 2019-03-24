@@ -46,7 +46,7 @@
                                           <label class="control-label">{{ $product -> product_name }} Price</label>
                                           <div class="controls">
                                               <input type="hidden" name="id[]" value="{{ $product -> id }}">
-                                              <input type="text" name="price[]" id="{{ $product -> id }}"  value="{{ $product -> membership[0] ->price[$product -> id-1]['price'] }}" required>
+                                              <input type="text" name="price[]" id="{{ $product -> id }}"  value="{{ $product->membership[0]->price[$loop->index]['price'] }}" required>
                                           </div>
                                     </td>
                                     <td>{{ $product -> category -> name }}</td>
@@ -55,7 +55,7 @@
                                     @foreach($product -> membership as $prices_col)
                                     <td>
                                       @foreach($prices_col['price'] as $prices)
-                                      {{ $prices['product_id'] == $product -> id ? $prices['price'] : ''}}
+                                      {{ $prices['product_id'] === $product -> id ? $prices['price'] : ''}}
                                       @endforeach
                                     </td>
                                     @endforeach

@@ -2,194 +2,151 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Auth;
-use Session;
-use Image;
+use App\Membership;
 use App\Category;
-use App\Product;
 use App\Price;
+use App\Product;
 
 class ProductController extends Controller
 {
-    public function addProduct(Request $request){
-
-    	if($request -> isMethod('post')){
-    		$data = $request -> all();
-    		if (empty($data['category_id'])) {
-    			return redirect()-> back()-> with('flash_message_error', 'Field "Select Category" is missing!');
-    		}
-        // dd($data);
-    		$product = new Product;
-    		$product -> category_id = $data['category_id'];
-    		$product -> product_name = $data['product_name'];
-    		$product -> product_code = $data['product_code'];
-    		if (!empty($data['description'])) {
-    			$product -> description = $data['description'];
-    		} else {
-    			$product -> description = '';
-    		}
-
-    		// Upload Image
-    		if($request->hasFile('image')) {
-    			$image_tmp = Input::file('image');
-                if ($image_tmp -> isValid()){
-                    $extension = $image_tmp -> getClientOriginalExtension();
-                    $filename = rand(111,99999).'.'.$extension;
-                    $large_image_path = 'images/backend_images/products/large/'.$filename;
-                    $medium_image_path = 'images/backend_images/products/medium/'.$filename;
-                    $small_image_path = 'images/backend_images/products/small/'.$filename;
-                    // Resize Images
-                    Image::make($image_tmp) -> save($large_image_path);
-                    Image::make($image_tmp) -> resize(600,600) -> save($medium_image_path);
-                    Image::make($image_tmp) -> resize(300,300) -> save($small_image_path);
-                    // Store image name in products table
-                    $product -> image = $filename;
-                }
-    		}
-            else{
-                $product -> image = '';
-            }
-            // Ceck checkbox
-              if(empty($data['status'])){
-                $status = 0;
-            }else {
-                $status = 1;
-            }
-            $product->status = $status;
-            $product -> save();
-            $productId = Product::orderby('created_at', 'desc')->first();
-            $price = new Price;
-            $price -> product_id = $productId;
-            // $price -> 2 = $data['standart_price'];
-            // $price -> 3 = $data['silver_price'];
-            // $price -> 4 = $data['golden_price'];
-            // $price -> 5 = $data['diamond_price'];
-
-    		// $product -> image = '';
-
-            return redirect()-> back()-> with('flash_message_success', 'Product has been added successfully!');
-    		// return redirect('admin/view-products')-> with('flash_message_success', 'Product has been added successfully!');
-    	}
-
-    	//---------------- Categories Dropdown start-----------------//
-
-      // $categories = Category::where(['parent_id' => 0]) -> get();
-    	// $categories_dropdown = "<option value='' selected disabled>Select</option>";
-    	// foreach ($categories as $cat) {
-      //                     	         $categories_dropdown .= "<option value='".$cat->id."'>".$cat->name."</option>";
-      //                     		    	}
-    	// return view('admin.products.add_product')-> with(compact('categories_dropdown'));
-      $categories = \App\Category::all('id','name');
-      // dump($categories);
-      return view('admin.products.add_product', ['categories' => $categories]);
-    //------------------------Categories Dropdown ends-------------//
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+      $products = Product::all();
+      return view('admin.products.view_products',['products' => $products]);
     }
 
-    public function editProduct(Request $request, $id = null) {
-        if($request->isMethod('post')) {
-            $data = $request->all();
-
-            if($request->hasFile('image')) {
-                $image_tmp = Input::file('image');
-                if ($image_tmp -> isValid()){
-                    $extension = $image_tmp -> getClientOriginalExtension();
-                    $filename = rand(111,99999).'.'.$extension;
-                    $large_image_path = 'images/backend_images/products/large/'.$filename;
-                    $medium_image_path = 'images/backend_images/products/medium/'.$filename;
-                    $small_image_path = 'images/backend_images/products/small/'.$filename;
-                    // Resize Images
-                    Image::make($image_tmp) -> save($large_image_path);
-                    Image::make($image_tmp) -> resize(600,600) -> save($medium_image_path);
-                    Image::make($image_tmp) -> resize(300,300) -> save($small_image_path);
-                }
-            } else{
-                $filename = $data['current_image'];
-            }
-            if (empty($data['description'])) {
-                $data['description']='';
-            }
-
-              if(empty($data['status'])){
-                $status = 0;
-            }else {
-                $status = 1;
-            }
-            Product::where(['id'=>$id])->update(['category_id'=>$data['category_id'],'product_name'=>$data['product_name'],'product_code'=>$data['product_code'],'description'=>$data['description'],'price'=>$data['price'],'image'=>$filename, 'status'=>$status]);
-            return redirect()->back()->with('flash_message_success', 'Product has been updated successfully!');
-        }
-
-        // get Product Details
-        $productDetails = Product::where(['id' =>$id]) -> first();
-
-        // Categories Dropdown start
-        $categories = Category::where(['parent_id' => 0]) -> get();
-        $categories_dropdown = "<option value='' selected disabled>Select</option>";
-        foreach ($categories as $cat) {
-            if ($cat->id == $productDetails->category_id) {
-                $selected = "selected";
-            } else{
-                $selected = "";
-            }
-            $categories_dropdown .= "<option value='".$cat->id."' ".$selected.">".$cat->name."</option>";
-                    }
-        // Categories Dropdown ends
-        return view('admin.products.edit_product')->with(compact('productDetails', 'categories_dropdown'));
-
-
-
-        // if($request->isMethod('post')){
-        //   $data = $request->all();
-        //   Category::where(['id'=> $id])->update(['name'=>$data['category_name'], 'description'=>$data['description'], 'url'=>$data['url']]);
-        //   return redirect ('/admin/view-categories')->with('flash_message_success', 'Category updated successfully!');
-        // }
-        // $categoryDetails = Category::where(['id'=>$id])->first();
-        // return view('admin.categories.edit_category')->with(compact('categoryDetails'));
-    }
-    //
-
-    public function viewProducts(){
-
-        // $products = DB::table('products')
-        //     ->join('categories', 'categories.id', '=', 'products.category_id')
-        //     // ->join('prices', 'products.id', '=', 'prices.product_id')
-        //     ->select('products.id','categories.name as categoryName','products.product_name as productName','products.product_code')
-        //     // ->select('products.id','categories.name as categoryName','products.product_name as productName','products.product_code','prices.price','membership_id')
-        //     ->get();
-
-            $products = \App\Product::all();
-            // dd($products[0]->membership);
-
-        return view('admin.products.view_products',['products' => $products]);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+      $memberships = Membership::all('id','name');
+      $categories = Category::all('id','name');
+      return view('admin.products.add_product', ['categories' => $categories,'memberships' => $memberships]);
     }
 
-    public function deleteProduct($id = null){
-        Product::where(['id'=>$id])->delete();
-        return redirect()->back()->with('flash_message_success', 'Product has been deleted successfully!');
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+      // dd($request);
+      $product = new Product;
+      $product -> category_id = $request['category_id'];
+      $product -> product_name = $request['product_name'];
+      $product -> product_code = $request['product_code'];
+      $product -> description = $request['description'];
+      if($request->hasFile('image')) {
+        $image_tmp = Input::file('image');
+              if ($image_tmp -> isValid()){
+                  $extension = $image_tmp -> getClientOriginalExtension();
+                  $filename = rand(111,99999).'.'.$extension;
+                  $large_image_path = 'images/backend_images/products/large/'.$filename;
+                  $medium_image_path = 'images/backend_images/products/medium/'.$filename;
+                  $small_image_path = 'images/backend_images/products/small/'.$filename;
+                  // Resize Images
+                  Image::make($image_tmp) -> save($large_image_path);
+                  Image::make($image_tmp) -> resize(600,600) -> save($medium_image_path);
+                  Image::make($image_tmp) -> resize(300,300) -> save($small_image_path);
+                  // Store image name in products table
+                  $product -> image = $filename;
+              }
+      }else{
+          $product -> image = '';
+      }
+      if(isset($request['status'])?$status = 1:$status = 0);
+      $product->status = $status;
+      $product -> save();
+      $memberships = Membership::all();
+      $product->membership()->attach($memberships);
+      foreach ($request->id as $key => $prices) {
+        $price = new Price;
+        $price->product_id = $product->id;
+        $price->membership_id = $request->id[$key];
+        $price->price = $request->price[$key];
+        $price->save();
+      }
+      return redirect('/admin/products')->with('flash_message_success', 'Product has been created successfully!');
     }
 
-    public function deleteProductImage($id = null) {
-        // Get product Image Name
-        $productImage = Product::where(['id' => $id])->first();
-        // Get Product Image Path
-        $large_image_path = 'images/backend_images/products/large/';
-        $medium_image_path = 'images/backend_images/products/medium/';
-        $small_image_path = 'images/backend_images/products/small/';
-        // Delete large Image if not exists in Folder
-        if(file_exists($large_image_path.$productImage->image)){
-            unlink($large_image_path.$productImage->image);
-        }// Delete medium Image if not exists in Folder
-        if(file_exists($medium_image_path.$productImage->image)){
-            unlink($medium_image_path.$productImage->image);
-        }// Delete small Image if not exists in Folder
-        if(file_exists($small_image_path.$productImage->image)){
-            unlink($small_image_path.$productImage->image);
-        }
-        // Delete Image from Products Table
-        Product::where(['id'=>$id])->update(['image'=>'']);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-        return redirect()->back()->with('flash_message_success', 'Product Image has been deleted successfully!');
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+      $product = Product::find($id);
+      $memberships = Membership::all('id','name');
+      $categories = Category::all('id','name');
+      return view('admin.products.edit_product', ['categories' => $categories,'memberships' => $memberships,'product' => $product]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+      // dd($request);
+      if(isset($request['status'])?$status = 1:$status = 0);
+      Product::where(['id'=> $id])->update([
+        'category_id'=>$request['category_id'],
+        'product_name'=>$request['product_name'],
+        'product_code'=>$request['product_code'],
+        'description'=>$request['description'],
+        'image'=>$request['image'],
+        'status'=>$status
+        ]);
+      $prices_id = $request->id;
+      foreach($prices_id as $key => $price_id)
+      {
+          Price::find($price_id)->update(['price'=>$request->price[$key]]);
+      }
+      return redirect ('/admin/products')->with('flash_message_success', 'Product updated successfully!');
+            //TODO padaryti nuotraukos atnaujinima
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+      // dd($id);
+      $product = Product::find($id);
+      $memberships = Membership::all();
+      $product->membership()->detach($memberships);
+      Price::where(['product_id'=> $id])->delete();
+      $product->delete();
+      return redirect ('/admin/products')->with('flash_message_success', 'Product has been deleted successfully!');
     }
 }

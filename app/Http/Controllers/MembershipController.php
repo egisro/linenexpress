@@ -28,6 +28,9 @@ class MembershipController extends Controller
     public function create()
     {
       $products = Product::all();
+      // $product -> membership[0] ->price[($product -> id)-1]['price']
+      // dd($products[9]->membership[0]->price);
+      // dd($products[8]->membership[0]->price[($products[8]->id)-1]['price']);
       return view('admin.memberships.add_membership',['products'=>$products]);
     }
 
@@ -90,11 +93,10 @@ class MembershipController extends Controller
     {
       Membership::where(['id'=> $id])->update(['name'=>$request['membership_name']]);
       $prices = $request->input('products');
-      foreach($prices as $price){
-      Price::find($price['id'])->update(['price'=>$price['price']]);
-    }
-      // dd($prices);
-      // \App\Price::where(['id'=> $id])->update(['name'=>$data['membership_name'], 'description'=>$data['description'], 'url'=>$data['url'], 'status'=>$status]);
+      foreach($prices as $price)
+      {
+          Price::find($price['id'])->update(['price'=>$price['price']]);
+      }
       return redirect ('/admin/memberships')->with('flash_message_success', 'Membership and prices updated successfully!');
     }
 
@@ -106,6 +108,7 @@ class MembershipController extends Controller
      */
     public function destroy($id)
     {
+      Client::where(['membership_id' => $id])->update(['membership_id'=>1]);
       $membership = Membership::find($id);
       $products = Product::all();
       $membership->product()->detach($products);

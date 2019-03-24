@@ -3,7 +3,11 @@
 
   <div id="content">
     <div id="content-header">
-       <div id="breadcrumb"> <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="/admin/add-client/">Add Client</a> <a href="#" class="current">View Client</a> </div>
+       <div id="breadcrumb">
+         <a href="/admin/dashboard/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+         <a href="/admin/clients/create">Add Client</a>
+         <a href="/admin/clients" class="current">View Client</a>
+       </div>
       <h1>Clients</h1>
          @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
@@ -46,11 +50,13 @@
                   <td>{{ $client -> address }}</td>
                   <td>{{ $client -> membership['name'] }}</td>
                   <td class="center">
-                    <a href="#myModal{{ $client -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a>
-                    <a href="{{ url('/admin/add-client/') }}" class="btn btn-success btn-mini">Add</a>
-                    <a href="{{ url('/admin/edit-client/'.$client -> id) }}" class="btn btn-primary btn-mini">Edit</a>
-                    <a id="delClient" href="{{ url('/admin/delete-client/'.$client -> id) }}" class="btn btn-danger btn-mini">Delete</a>
-                    <!-- <a rel="{{ $client->id }}" rel1="delete-client" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delet</a> -->
+                    <form class="" action="{{ url('/admin/clients',$client -> id) }}" method="post">
+                      @csrf
+                      @method('DELETE')
+                      <!-- <a href="#myModal{{ $client -> id }}" data-toggle="modal"  class="btn btn-info btn-mini">View</a> -->
+                      <a href="{{ url("/admin/clients/{$client->id}/edit/") }}" class="btn btn-primary btn-mini">Edit</a>
+                      <button class="btn btn-danger btn-mini">Delete</button>
+                    </form>
                   </td>
                 </tr>
 
