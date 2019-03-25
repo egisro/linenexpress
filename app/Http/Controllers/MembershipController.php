@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Membership;
 use App\Price;
 use App\Product;
+use App\Client;
 
 class MembershipController extends Controller
 {
