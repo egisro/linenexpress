@@ -62,7 +62,7 @@
             <div id="deleteModal" class="modal hide">
               <div class="modal-header">
                 <button data-dismiss="modal" class="close" type="button">×</button>
-                <h3>Do you really want to delete category {{ $category -> name }}?</h3>
+                <h3>Do you really want to delete category <span class="modal_category_name"></span>?</h3>
               </div>
               <div class="modal-body">
                 <div class="widget-content nopadding">
@@ -112,6 +112,7 @@
            $('.delete').on('click', function(){
            $('#category_id').html($(this).data('id'));
            $('#category_name').html($(this).closest('tr').find('.category_name').text());
+           $('#category_name').html($(this).find('.modal_category_name').text());
            $('#cat').html($(this).closest('tr').find('.category_name').text());
            $('#category_url').html($(this).closest('tr').find('.category_url').text());
            $('#form_category_id').attr("action", $('#form_category_id').attr("action") + "/" + $(this).data('id'));
