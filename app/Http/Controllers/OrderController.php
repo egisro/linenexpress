@@ -15,8 +15,10 @@ class OrderController extends Controller
         // $categories = Category::with('categories')->where(['parent_id'=>0])->get();
         // $categories = json_decode(json_encode($categories));
         // echo "<pre>"; print_r($categories); die;
-        // dump($categories);
-        return view('order') -> with(compact('productsAll', 'categories'));
+        // dump($categories[1]->product);
+        // dump($productsAll[1]->price[0]['price']);
+
+        return view('order', ['productsAll'=>$productsAll, 'categories'=>$categories]);
     }
 }
 

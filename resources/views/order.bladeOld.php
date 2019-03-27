@@ -9,7 +9,8 @@
 								<h2>New Service Enquiry</h2>
 								<p>Please login first before placing an order !</p>
 								<!-- Start Table Area -->
-								<form method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="/products">	
+								<form method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="/products">
+								{{ csrf_field()	}}
 									<table class="table table-hover">
 										<thead align="left">
 											<tr class="text-white" style="background-color: #6cbb23 !important">
@@ -66,6 +67,7 @@
 								        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								      		</div>
 								    		<div class="modal-body">
+											
 												<table class="table table-hover">
 													<thead align="left">
 														<tr class="text-white" style="background-color: #6cbb23 !important">
@@ -83,12 +85,21 @@
 														</tr>
 													</tbody>
 												</table>
+												
 								    		</div>
 								    	<div class="modal-footer">
 								    	<button type="button" class="genric-btn secondary-border circle arrow d-inline-flex align-items-center mt-20" data-dismiss="modal">Close</button>
-								   		<button type="button" class="genric-btn primary circle arrow d-inline-flex align-items-center mt-20">Buy<span class="lnr lnr-arrow-right"></span></button>
+											<form method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="{{route('cart.store')}}">
+											{{ csrf_field()	}}
+											<input type="hidden" name="id" value="{{ $product->id }}">
+											<input type="hidden" name="name" value="{{ $product->id }}">
+											<input type="hidden" name="product_code" value="{{ $product->product_code }}">
+											<input type="hidden" name="price" value="{{ $product->price }}">
+											<input type="hidden" name="quantity" value="{{ $product->quantity }}">
+								   		<button type="submit" class="genric-btn primary circle arrow d-inline-flex align-items-center mt-20">Buy<span class="lnr lnr-arrow-right"></span></button>
+											 </form>
 								    </div>
-								    </div>
+									    </div>
 								  	</div>
 								</div>
 								<!-- End Modal -->

@@ -10,7 +10,6 @@
 								<p>Please login first before placing an order !</p>
 								<!-- Start Table Area -->
 								<form method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="/products">
-								{{ csrf_field()	}}
 									<table class="table table-hover">
 										<thead align="left">
 											<tr class="text-white" style="background-color: #6cbb23 !important">
@@ -24,26 +23,27 @@
 										</thead>
 										<tbody align="left">
 										@foreach($categories as $cat)
-											@if($cat->status == "1")<tr>
-												<th scope="row"></th>
-												<th>{{$cat->name}}</th>
-												<th></th>
-												<th></th>
-												<th></th>
-												<th></th>
-											</tr>
-											@foreach($cat->categories as $index => $product)
-												
-												<tr class="product">
-												<td scope="row"style="width: 20px !important;">{{$index+1}}</td>
-												<td class="name {{ $product->id }}" id="{{ $product->id }}">{{$product->product_name}}</td>
-												<td>{{$product->product_code}}</td>
-												<td class="price">{{$product->price}}</td>
-												<td><input class="quantity" type="number" id="tentacles" name="quantity[]" min="0" max="100"></td>
-												<td class="subtotal"></td>
+											@if($cat->status == "1" and count($cat->product) > 0)
+												<tr>
+													<th scope="row"></th>
+													<th>{{$cat->name}}</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 												</tr>
-											@endforeach
-											@endif
+													@foreach($cat->product as $index => $product)
+
+														<tr class="product">
+														<td scope="row"style="width: 20px !important;">{{$index+1}}</td>
+														<td class="name {{ $product->id }}" id="{{ $product->id }}">{{$product->product_name}}</td>
+														<td>{{$product->product_code}}</td>
+														<td class="price">{{$product->price[0]['price']}}</td>
+														<td><input class="quantity" type="number" id="tentacles" name="quantity[]" min="0" max="100"></td>
+														<td class="subtotal"></td>
+														</tr>
+													@endforeach
+												@endif
 											@endforeach
 											<tr>
 												<td scope="row"style="width: 20px !important;"></td>
@@ -55,7 +55,7 @@
 											</tr>
 										</tbody>
 									</table>
-									
+
             					</form>
             					<button type="button" class="genric-btn primary circle arrow d-inline-flex align-items-center mt-20" data-toggle="modal" data-target="#shopCartModal"><span class="mr-10">View Shopping Cart<span class="lnr lnr-arrow-right"></span></button>
             					<!-- Modal -->
@@ -67,7 +67,6 @@
 								        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								      		</div>
 								    		<div class="modal-body">
-											
 												<table class="table table-hover">
 													<thead align="left">
 														<tr class="text-white" style="background-color: #6cbb23 !important">
@@ -85,21 +84,12 @@
 														</tr>
 													</tbody>
 												</table>
-												
 								    		</div>
 								    	<div class="modal-footer">
 								    	<button type="button" class="genric-btn secondary-border circle arrow d-inline-flex align-items-center mt-20" data-dismiss="modal">Close</button>
-											<form method="POST" accept-charset="UTF-8" enctype="multipart/form-data" action="{{route('cart.store')}}">
-											{{ csrf_field()	}}
-											<input type="hidden" name="id" value="{{ $product->id }}">
-											<input type="hidden" name="name" value="{{ $product->id }}">
-											<input type="hidden" name="product_code" value="{{ $product->product_code }}">
-											<input type="hidden" name="price" value="{{ $product->price }}">
-											<input type="hidden" name="quantity" value="{{ $product->quantity }}">
-								   		<button type="submit" class="genric-btn primary circle arrow d-inline-flex align-items-center mt-20">Buy<span class="lnr lnr-arrow-right"></span></button>
-											 </form>
+								   		<button type="button" class="genric-btn primary circle arrow d-inline-flex align-items-center mt-20">Buy<span class="lnr lnr-arrow-right"></span></button>
 								    </div>
-									    </div>
+								    </div>
 								  	</div>
 								</div>
 								<!-- End Modal -->
