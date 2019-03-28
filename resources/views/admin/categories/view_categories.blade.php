@@ -48,7 +48,7 @@
                   <td class="category_name">{{ $category -> name }}</td>
                   <td class="category_url">{{ $category -> url }}</td>
                   <td class="center">
-                    @if($category -> name != 'Without category')
+                    @if($category -> id != 1)
                     <a href="{{ url("/admin/categories/{$category->id}/edit") }}" class="btn btn-primary btn-mini">Edit</a>
                     <a  href="#deleteModal" data-toggle="modal" data-id="{{ $category -> id }}" class="btn btn-danger btn-mini delete">Delete</a>
                     @endif
@@ -62,7 +62,7 @@
             <div id="deleteModal" class="modal hide">
               <div class="modal-header">
                 <button data-dismiss="modal" class="close" type="button">×</button>
-                <h3>Do you really want to delete category <span class="modal_category_name"></span>?</h3>
+                <h3>Do you really want to delete category <span id="modal_cat"></span>?</h3>
               </div>
               <div class="modal-body">
                 <div class="widget-content nopadding">
@@ -112,7 +112,7 @@
            $('.delete').on('click', function(){
            $('#category_id').html($(this).data('id'));
            $('#category_name').html($(this).closest('tr').find('.category_name').text());
-           $('#category_name').html($(this).find('.modal_category_name').text());
+           $('#modal_cat').html($(this).closest('tr').find('.category_name').text());
            $('#cat').html($(this).closest('tr').find('.category_name').text());
            $('#category_url').html($(this).closest('tr').find('.category_url').text());
            $('#form_category_id').attr("action", $('#form_category_id').attr("action") + "/" + $(this).data('id'));
